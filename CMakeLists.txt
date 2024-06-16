@@ -1,0 +1,74 @@
+cmake_minimum_required(VERSION 3.19)
+
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
+
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
+project(cpp-algebra)
+
+include_directories(
+  ${PROJECT_SOURCE_DIR}/include
+  ${PROJECT_SOURCE_DIR}/src
+)
+
+file(GLOB all_srcs
+  "${PROJECT_SOURCE_DIR}/include/*.h"
+  "${PROJECT_SOURCE_DIR}/src/*.cpp"
+)
+
+add_library(cpp-algebra-static STATIC ${all_srcs})
+
+set_target_properties(
+    cpp-algebra-static
+    PROPERTIES ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib
+)
+
+# Testing binary
+enable_testing()
+set(CMAKE_BUILD_TYPE Debug)
+set(TEST_DIR "${PROJECT_SOURCE_DIR}/tests")
+set(QUATERNION_TEST_DIR "${TEST_DIR}/quaternion")
+
+set(QUATERNION-EXEC-NAME "quaternion-test")
+
+set(QUATERNION-TEST-CONJUGATE "${QUATERNION-EXEC-NAME}-conjugate")
+add_executable(${QUATERNION-TEST-CONJUGATE} ${QUATERNION_TEST_DIR}/conjugate.cpp)
+target_link_libraries(${QUATERNION-TEST-CONJUGATE} cpp-algebra-static)
+add_test(NAME ${QUATERNION-TEST-CONJUGATE} COMMAND $<TARGET_FILE:${QUATERNION-TEST-CONJUGATE}>)
+
+set(QUATERNION-TEST-NORM "${QUATERNION-EXEC-NAME}-norm")
+add_executable(${QUATERNION-TEST-NORM} ${QUATERNION_TEST_DIR}/norm.cpp)
+target_link_libraries(${QUATERNION-TEST-NORM} cpp-algebra-static)
+add_test(NAME ${QUATERNION-TEST-NORM} COMMAND $<TARGET_FILE:${QUATERNION-TEST-NORM}>)
+
+set(QUATERNION-TEST-SCALAR-PRODUCT "${QUATERNION-EXEC-NAME}-scalar-product")
+add_executable(${QUATERNION-TEST-SCALAR-PRODUCT} ${QUATERNION_TEST_DIR}/scalar-product.cpp)
+target_link_libraries(${QUATERNION-TEST-SCALAR-PRODUCT} cpp-algebra-static)
+add_test(NAME ${QUATERNION-TEST-SCALAR-PRODUCT} COMMAND $<TARGET_FILE:${QUATERNION-TEST-SCALAR-PRODUCT}>)
+
+set(QUATERNION-TEST-VECTOR-PRODUCT "${QUATERNION-EXEC-NAME}-vector-product")
+add_executable(${QUATERNION-TEST-VECTOR-PRODUCT} ${QUATERNION_TEST_DIR}/vector-product.cpp)
+target_link_libraries(${QUATERNION-TEST-VECTOR-PRODUCT} cpp-algebra-static)
+add_test(NAME ${QUATERNION-TEST-VECTOR-PRODUCT} COMMAND $<TARGET_FILE:${QUATERNION-TEST-VECTOR-PRODUCT}>)
+
+set(QUATERNION-TEST-SCALE "${QUATERNION-EXEC-NAME}-scale")
+add_executable(${QUATERNION-TEST-SCALE} ${QUATERNION_TEST_DIR}/scale.cpp)
+target_link_libraries(${QUATERNION-TEST-SCALE} cpp-algebra-static)
+add_test(NAME ${QUATERNION-TEST-SCALE} COMMAND $<TARGET_FILE:${QUATERNION-TEST-SCALE}>)
+
+set(QUATERNION-TEST-SUM-SUBTRACT "${QUATERNION-EXEC-NAME}-sum-subtract")
+add_executable(${QUATERNION-TEST-SUM-SUBTRACT} ${QUATERNION_TEST_DIR}/sum-subtract.cpp)
+target_link_libraries(${QUATERNION-TEST-SUM-SUBTRACT} cpp-algebra-static)
+add_test(NAME ${QUATERNION-TEST-SUM-SUBTRACT} COMMAND $<TARGET_FILE:${QUATERNION-TEST-SUM-SUBTRACT}>)
+
+set(QUATERNION-TEST-ORTHOGONAL "${QUATERNION-EXEC-NAME}-orthogonal")
+add_executable(${QUATERNION-TEST-ORTHOGONAL} ${QUATERNION_TEST_DIR}/orthogonal.cpp)
+target_link_libraries(${QUATERNION-TEST-ORTHOGONAL} cpp-algebra-static)
+add_test(NAME ${QUATERNION-TEST-ORTHOGONAL} COMMAND $<TARGET_FILE:${QUATERNION-TEST-ORTHOGONAL}>)
+
+set(QUATERNION-TEST-NORMALIZE "${QUATERNION-EXEC-NAME}-normalize")
+add_executable(${QUATERNION-TEST-NORMALIZE} ${QUATERNION_TEST_DIR}/normalize.cpp)
+target_link_libraries(${QUATERNION-TEST-NORMALIZE} cpp-algebra-static)
+add_test(NAME ${QUATERNION-TEST-NORMALIZE} COMMAND $<TARGET_FILE:${QUATERNION-TEST-NORMALIZE}>)
+
