@@ -17,7 +17,7 @@ Quaternion::Quaternion(double x, double y, double z) {
   this->z = z;
 }
 
-double Quaternion::norm() { return std::sqrt(squaredNorm()); }
+double Quaternion::norm() { return sqrt(squaredNorm()); }
 
 double Quaternion::squaredNorm() {
   return pow(w, 2) + pow(x, 2) + pow(y, 2) + pow(z, 2);
